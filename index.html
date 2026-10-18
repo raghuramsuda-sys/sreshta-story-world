@@ -247,8 +247,8 @@ const STORIES = [
     ],
     map: [`Ria flies her kite`, `The string breaks`, `Ria cannot find the kite`, `Kabir has the kite`, `They fly it together`],
     check: [
-      { kind: "fact", q: `Where did the kite fall?`, opts: [`On the other side of the big mango tree`, `On the roof of a tall house`, `In the middle of the road`], a: 0, ans: `On the other side of the big mango tree.` },
-      { kind: "feel", q: `Why did Ria's eyes fill with tears?`, opts: [`She loved her new kite and thought it was lost`, `She was feeling very sleepy`, `A leaf fell on her shoe`], a: 0, ans: `She loved her new kite and thought it was lost.` },
+      { kind: "fact", q: `Where did the kite fall?`, opts: [`On the other side of the big mango tree`, `On the roof of a tall house`, `In the middle of the road`], a: 0, ans: `On the other side of the big mango tree` },
+      { kind: "feel", q: `Why did Ria's eyes fill with tears?`, opts: [`She loved her new kite and thought it was lost`, `She was feeling very sleepy`, `A leaf fell on her shoe`], a: 0, ans: `She loved her new kite and thought it was lost` },
       { kind: "open", q: `The story ends with two new friends. What do you think Ria and Kabir will do tomorrow?`, examples: `Fly the kite again • Play with the puppy • Read a story under the mango tree` }
     ],
     twist: `What if the puppy had caught the string first? What would happen then?`
@@ -273,8 +273,8 @@ const STORIES = [
     ],
     map: [`Pip feels lonely at his gate`, `Pip hears a sound near the tree`, `Mili the kitten feels a little shy`, `Pip plays slow and gentle`, `Pip and Mili play every day`],
     check: [
-      { kind: "fact", q: `Where did Pip hear the soft sound?`, opts: [`Near the mango tree`, `Inside a big box`, `Down by the river`], a: 0, ans: `Near the mango tree.` },
-      { kind: "feel", q: `Why did Mili take one step back?`, opts: [`Pip looked big to her, so she felt a little shy at first`, `She wanted to run home at once`, `She did not like balls at all`], a: 0, ans: `Pip looked big to her, so she felt a little shy at first.` },
+      { kind: "fact", q: `Where did Pip hear the soft sound?`, opts: [`Near the mango tree`, `Inside a big box`, `Down by the river`], a: 0, ans: `Near the mango tree` },
+      { kind: "feel", q: `Why did Mili take one step back?`, opts: [`Pip looked big to her, so she felt a little shy at first`, `She wanted to run home at once`, `She did not like balls at all`], a: 0, ans: `Pip looked big to her, so she felt a little shy at first` },
       { kind: "open", q: `What game do you think Pip and Mili will play tomorrow?`, examples: `Hide and seek • Ball again, slow and soft • Chasing leaves in the yard` }
     ],
     twist: `What if a small bird wanted to join Pip and Mili? What would Pip do to be gentle with the bird?`
@@ -300,8 +300,8 @@ const STORIES = [
     ],
     map: [`Tara hears a sound in the tree`, `Kuku the parrot talks to Tara`, `Kuku shows the hidden ripe mangoes`, `Tara tastes the sweetest mango`, `Tara shares the mangoes with her friends`],
     check: [
-      { kind: "fact", q: `What was hiding behind the big leaf?`, opts: [`Three ripe mangoes`, `A small bird nest`, `Two red flowers`], a: 0, ans: `Three ripe mangoes.` },
-      { kind: "feel", q: `Why did Tara share the mangoes with her friends?`, opts: [`She wanted her friends to taste the sweet mangoes too`, `The mangoes were too heavy to hold`, `Kuku told her she must share at once`], a: 0, ans: `She wanted her friends to taste the sweet mangoes too.` },
+      { kind: "fact", q: `What was hiding behind the big leaf?`, opts: [`Three ripe mangoes`, `A small bird nest`, `Two red flowers`], a: 0, ans: `Three ripe mangoes` },
+      { kind: "feel", q: `Why did Tara share the mangoes with her friends?`, opts: [`She wanted her friends to taste the sweet mangoes too`, `The mangoes were too heavy to hold`, `Kuku told her she must share at once`], a: 0, ans: `She wanted her friends to taste the sweet mangoes too` },
       { kind: "open", q: `Next summer, what secret do you think Kuku will show Tara?`, examples: `A hidden nest • A rainbow feather • A tiny new mango tree` }
     ],
     twist: `What if YOU found the mango tree secret? Who would you share the first mango with, and why?`
@@ -363,6 +363,7 @@ let baseMapPlaced = [];
 function draft() { if (!S.baseDraft) S.baseDraft = { support: null, mapDone: false, retell: "", tale: null }; return S.baseDraft; }
 function startBaseline() { BP = 0; baseMapPlaced = []; renderBase(); show("scr-base"); }
 function shuffledOrder(n) { const a = Array.from({ length: n }, (_, i) => i); return a.map((v, i) => a[(i + 2) % n]).map((v, i, arr) => arr[i]); }
+function shuffledIdx(n) { const a = Array.from({ length: n }, (_, i) => i); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function baseStep() {
   if (S.baseline) return "done";
   const d = S.baseDraft; if (!d || !d.support) return "read";
@@ -615,7 +616,8 @@ function renderMission() {
         <button class="btn" onclick="openAnswerDone()">That is my answer ⭐</button>
         <div id="openAfter"></div>`;
     } else {
-      inner += c.opts.map((o, oi) => `<button class="opt" id="chkOpt${oi}" onclick="checkAnswer(${oi})">${esc(o)}</button>`).join("") + `<div id="chkMsg" style="font-weight:800;color:var(--goldlt);min-height:22px"></div>`;
+      const order = shuffledIdx(c.opts.length);
+      inner += order.map(oi => `<button class="opt" id="chkOpt${oi}" onclick="checkAnswer(${oi})">${esc(c.opts[oi])}</button>`).join("") + `<div id="chkMsg" style="font-weight:800;color:var(--goldlt);min-height:22px"></div>`;
     }
     inner += `</div></div>`;
     B.innerHTML = inner;
