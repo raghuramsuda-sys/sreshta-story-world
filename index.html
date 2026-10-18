@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sreshta's Story World — Read, Imagine, Tell Your Own</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--indigo:#241254;--indigo2:#3A1E63;--card2:#45267a;--gold:#FFC94D;--goldlt:#FFD977;--cream:#FFF6E3;--paper:#FFF9EC;--ink:#2C2350;--soft:#F3DFA7;--line:#8a6bc9;--stage1:#9B7EDE;--rose:#EF6AA5;--teal:#2BB3A3;--mgold:#F2B134;--sky:#57A8E8}
+body{margin:0;font-family:'Nunito',sans-serif;color:var(--cream);background:linear-gradient(180deg,#170A38 0%,#241254 34%,#3b1b63 68%,#4c2577 100%);min-height:100dvh;overflow-x:hidden;position:relative}
+.sky{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#FFEFC4;opacity:.75;animation:tw 2.8s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.25}50%{opacity:.9}}
+h1,h2,h3,.baloo{font-family:'Baloo 2',cursive}
+.scr{display:none;max-width:480px;margin:0 auto;padding:12px 14px 34px;min-height:100dvh;position:relative;z-index:2}
+.scr.on{display:block}
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.topbar .tb{background:rgba(255,255,255,.08);border:2px solid var(--line);color:var(--soft);border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px;cursor:pointer;min-height:44px}
+.topbar .crumb{font-size:13px;font-weight:800;color:var(--soft);opacity:.9}
+.door{text-align:center;padding:10px 0 2px}
+.lamp{font-size:40px;line-height:1;filter:drop-shadow(0 0 14px rgba(255,201,77,.85))}
+h1.title{margin:6px 0 0;font-size:30px;background:linear-gradient(180deg,var(--goldlt),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.15}
+.tagline{font-weight:800;color:#E9C9FF;letter-spacing:.3px;margin:3px 0 8px}
+.lumiRow{display:flex;gap:12px;align-items:flex-end;margin:8px 0}
+.lumiWrap{flex:0 0 104px;cursor:pointer;animation:bob 3s ease-in-out infinite;text-align:center}
+.lumiWrap svg{width:104px;height:auto}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.lumiWrap.dim{opacity:.6;animation:none;flex-basis:64px}
+.lumiWrap.dim svg{width:64px}
+.bubble{position:relative;background:var(--paper);color:var(--ink);border:3px solid var(--gold);border-radius:22px;padding:12px 14px;font-family:'Baloo 2',cursive;font-size:17px;line-height:1.35;flex:1;box-shadow:0 4px 0 rgba(10,2,28,.35)}
+.bubble:after{content:"";position:absolute;left:-13px;bottom:20px;width:20px;height:20px;background:var(--paper);border-left:3px solid var(--gold);border-bottom:3px solid var(--gold);transform:rotate(45deg);border-bottom-left-radius:6px}
+.card{background:var(--card2);border:1.5px solid rgba(255,201,77,.35);border-radius:20px;padding:14px;box-shadow:0 4px 14px rgba(10,2,28,.35);margin:10px 0;color:var(--cream)}
+.card.creamy{background:var(--paper);color:var(--ink)}
+.btn{display:block;width:100%;border:none;cursor:pointer;border-radius:999px;padding:13px 16px;font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;background:linear-gradient(180deg,var(--goldlt),var(--gold));color:#3A1E00;box-shadow:0 4px 0 #B97F06;margin:8px 0;min-height:50px}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #B97F06}
+.btn.plum{background:var(--indigo2);color:var(--soft);border:2px solid var(--line);box-shadow:none}
+.btn.ghost{background:rgba(255,255,255,.07);color:var(--cream);border:2px solid var(--line);box-shadow:none}
+.btn:disabled{opacity:.45}
+.entry{display:flex;align-items:center;gap:12px;background:var(--card2);border:2px solid var(--line);border-radius:18px;padding:12px 14px;width:100%;cursor:pointer;font-family:'Baloo 2',cursive;font-size:19px;font-weight:800;color:var(--cream);margin:8px 0;text-align:left;min-height:58px}
+.entry .face{font-size:28px}
+.entry small{display:block;font-family:'Nunito';font-size:12px;color:#D9C8FF;font-weight:700}
+.pinDots{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.pinDots span{width:18px;height:18px;border-radius:50%;border:3px solid var(--gold);background:transparent}
+.pinDots span.f{background:var(--gold)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:290px;margin:0 auto}
+.pad button{font-family:'Baloo 2';font-size:23px;font-weight:800;padding:12px 0;border-radius:16px;border:2px solid #D9B94A;background:#FFF3D6;color:#3A2A00;cursor:pointer;min-height:54px}
+#pinMsg{text-align:center;font-weight:800;color:var(--goldlt);min-height:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,201,77,.3);border-radius:16px;padding:8px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80px}
+.stat .n{font-family:'Baloo 2';font-size:20px;font-weight:800;color:var(--goldlt);line-height:1.12}
+.stat .l{font-size:11.5px;font-weight:800;color:#D9C8FF;line-height:1.2;margin-top:3px}
+.shelfWrap{background:linear-gradient(180deg,#311A5E,#2A1454);border:2px solid #6B4FA8;border-radius:18px;padding:12px 12px 6px;margin:10px 0;box-shadow:inset 0 0 24px rgba(0,0,0,.35)}
+.shelf{display:flex;align-items:flex-end;gap:7px;min-height:86px;padding:0 4px}
+.woodbar{height:10px;background:linear-gradient(180deg,#8A5A2B,#6E4420);border-radius:4px;margin:0 -4px 8px;box-shadow:0 3px 5px rgba(0,0,0,.4)}
+.spine{width:40px;height:80px;border-radius:5px 5px 2px 2px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:6px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18),0 2px 4px rgba(0,0,0,.35)}
+.spine .band{width:100%;height:8px;margin-bottom:5px}
+.spine .st{writing-mode:vertical-rl;font-family:'Baloo 2';font-size:9.5px;font-weight:800;color:#fff;line-height:1.05;max-height:52px;overflow:hidden}
+.emptyShelf{color:#C9B4F5;font-weight:800;font-size:13.5px;text-align:center;padding:18px 6px 12px}
+.stand{background:linear-gradient(135deg,#5B2A86,#7A3FA3);border:2px solid var(--gold);border-radius:20px;padding:13px 14px;margin:10px 0;box-shadow:0 6px 16px rgba(10,2,28,.4)}
+.stand h3{margin:0 0 2px;font-size:13px;letter-spacing:1.2px;color:var(--goldlt)}
+.stand .ct{font-family:'Baloo 2';font-size:21px;font-weight:800;line-height:1.2}
+.stand .tz{font-size:13.5px;font-weight:700;color:#F0E2FF;margin-top:2px}
+.stand button{background:var(--gold);color:#3A1E00;border:none;border-radius:999px;padding:9px 20px;font-family:'Baloo 2';font-weight:800;font-size:16px;cursor:pointer;margin-top:8px;min-height:48px}
+.mrow{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.07);border:2px solid rgba(138,107,201,.55);border-radius:16px;padding:10px 12px;margin:7px 0;cursor:pointer;width:100%;text-align:left;color:var(--cream);min-height:56px}
+.mrow .no{font-family:'Baloo 2';font-weight:800;background:var(--stage1);color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex:0 0 34px;font-size:16px}
+.mrow .mt{font-family:'Baloo 2';font-weight:800;font-size:16.5px;line-height:1.15}
+.mrow .ms{font-size:12px;font-weight:800;color:#D9C8FF}
+.mrow.lock{opacity:.62;cursor:default}
+.mrow.done .no{background:#2F9E44}
+.stageCard{border:2px dashed rgba(138,107,201,.7);border-radius:16px;padding:10px 12px;margin:7px 0;color:#C9B4F5}
+.stageCard .st1{font-family:'Baloo 2';font-weight:800;font-size:16px}
+.page{background:var(--paper);color:var(--ink);border-radius:18px;padding:18px 16px;box-shadow:0 6px 16px rgba(10,2,28,.4);margin:10px 0;position:relative}
+.page .pic{font-size:40px;text-align:center;margin-bottom:6px}
+.page p{font-size:20px;line-height:1.55;margin:6px 0;font-weight:600}
+.gloww{color:#B97F06;font-weight:800;border-bottom:2.5px dotted #F2B134;cursor:pointer;padding:0 1px}
+.pgNav{display:flex;gap:10px}
+.pgNav .btn{flex:1}
+#glowPop{display:none;background:#FFF3D6;color:var(--ink);border:3px solid var(--gold);border-radius:16px;padding:12px 14px;margin:10px 0}
+#glowPop .gw{font-family:'Baloo 2';font-size:19px;font-weight:800;color:#8A5A00}
+.tile{display:block;width:100%;background:#FFF3D6;color:var(--ink);border:2.5px solid #D9B94A;border-radius:14px;padding:12px;font-family:'Baloo 2';font-weight:800;font-size:16px;margin:7px 0;cursor:pointer;text-align:left;min-height:50px}
+.tile.placed{background:#DFF5D8;border-color:#2F9E44;opacity:.95}
+.tile.wig{animation:wig .35s ease}
+@keyframes wig{0%,100%{transform:translateX(0)}30%{transform:translateX(-5px)}60%{transform:translateX(5px)}}
+.slot{min-height:52px;border:2px dashed rgba(255,201,77,.5);border-radius:14px;padding:8px 10px;margin:6px 0;font-weight:800;color:#D9C8FF;display:flex;align-items:center}
+.slot.full{border-style:solid;background:rgba(47,158,68,.22);color:#DFF5D8}
+.opt{display:block;width:100%;background:rgba(255,255,255,.08);color:var(--cream);border:2px solid var(--line);border-radius:14px;padding:12px;font-family:'Baloo 2';font-weight:800;font-size:16px;margin:7px 0;cursor:pointer;text-align:left;min-height:50px}
+.opt.pick{background:#2F9E44;border-color:#2F9E44;color:#fff}
+textarea,input[type=text]{width:100%;border-radius:14px;border:2.5px solid #D9B94A;background:#FFFDF6;color:var(--ink);font-family:'Nunito';font-weight:700;font-size:16px;padding:11px;margin:6px 0}
+.revRow{display:flex;gap:7px;margin:6px 0 12px}
+.revRow button{flex:1;border-radius:999px;border:2px solid var(--line);background:rgba(255,255,255,.07);color:var(--cream);font-family:'Baloo 2';font-weight:800;font-size:14.5px;padding:10px 4px;cursor:pointer;min-height:48px}
+.revRow button.sel{background:var(--gold);color:#3A1E00;border-color:var(--gold)}
+.pickGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0}
+.pick{border:3px solid rgba(138,107,201,.6);border-radius:16px;padding:13px 8px;text-align:center;cursor:pointer;font-family:'Baloo 2';font-weight:800;font-size:16px;color:var(--cream);background:rgba(255,255,255,.06);min-height:64px}
+.pick.sel{border-color:var(--gold);background:rgba(255,201,77,.18)}
+.dashNav{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.dashNav button{border-radius:999px;border:2px solid var(--line);background:rgba(255,255,255,.07);color:var(--cream);font-family:'Baloo 2';font-weight:800;font-size:14px;padding:9px 14px;cursor:pointer;min-height:46px}
+.dashNav button.sel{background:var(--gold);color:#3A1E00;border-color:var(--gold)}
+.hidden{display:none!important}
+.cele{animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.04)}100%{transform:scale(1)}}
+.foot{font-size:12px;color:#B79FEB;font-weight:700;text-align:center;margin-top:14px;line-height:1.5}
+.stepTag{font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--goldlt)}
+.taleRow{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.07);border:2px solid rgba(255,201,77,.4);border-radius:14px;padding:10px 12px;margin:7px 0;cursor:pointer;width:100%;text-align:left;color:var(--cream);min-height:52px}
+</style>
+<style>#islandBackBtn{position:fixed;bottom:calc(env(safe-area-inset-bottom, 0px) + 10px);left:10px;z-index:2147483000;background:#3B1163;border:1.5px solid rgba(255,201,77,.85);color:#F3DFA7;border-radius:999px;padding:9px 14px;font-weight:700;font-size:14px;line-height:1;text-decoration:none;box-shadow:0 4px 14px rgba(10,2,28,.45);min-height:44px;display:inline-flex;align-items:center;box-sizing:border-box}</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+
+<section class="scr" id="scr-access">
+  <div class="door">
+    <div class="lamp">🏮</div>
+    <h1 class="title">Sreshta's Story World</h1>
+    <div class="tagline">Read • Imagine • Tell Your Own 📚</div>
+  </div>
+  <div class="lumiRow">
+    <div class="lumiWrap" id="accessLumi"></div>
+    <div class="bubble">Hello, Sreshta! I am Lumi. My lamp is lit and your library is waiting. Shall we read?</div>
+  </div>
+  <button class="entry" onclick="openPin('child')"><span class="face">📖</span><span>Sreshta<small>Tap to open your library</small></span></button>
+  <button class="entry" onclick="openPin('parent')"><span class="face">🔑</span><span>Parents<small>Mom &amp; Dad — dashboard</small></span></button>
+  <p class="foot">A quiet library of stories, made just for Sreshta.</p>
+</section>
+
+<section class="scr" id="scr-pin">
+  <div class="topbar"><button class="tb" onclick="show('scr-access')">← Back</button><span class="crumb">Secret PIN</span></div>
+  <h2 class="baloo" id="pinTitle" style="text-align:center;color:var(--goldlt)">PIN</h2>
+  <div class="pinDots" id="pinDots"><span></span><span></span><span></span><span></span></div>
+  <div id="pinMsg"></div>
+  <div class="pad">
+    <button onclick="pinKey('1')">1</button><button onclick="pinKey('2')">2</button><button onclick="pinKey('3')">3</button>
+    <button onclick="pinKey('4')">4</button><button onclick="pinKey('5')">5</button><button onclick="pinKey('6')">6</button>
+    <button onclick="pinKey('7')">7</button><button onclick="pinKey('8')">8</button><button onclick="pinKey('9')">9</button>
+    <button onclick="pinKey('C')">C</button><button onclick="pinKey('0')">0</button><button onclick="pinKey('⌫')">⌫</button>
+  </div>
+</section>
+
+<section class="scr" id="scr-base">
+  <div class="topbar"><button class="tb" onclick="goHome()">← Library</button><span class="crumb">Day 1 — My First Books</span></div>
+  <div id="baseBody"></div>
+</section>
+
+<section class="scr" id="scr-pick">
+  <div class="topbar"><span class="crumb">One last Day-1 gift</span></div>
+  <div class="lumiRow"><div class="lumiWrap" id="pickLumi"></div><div class="bubble">Your First Books are safe forever. Now pick your very own bookmark — it will hold your page in every book!</div></div>
+  <div class="pickGrid" id="bookmarkGrid"></div>
+  <button class="btn" id="bookmarkBtn" onclick="saveBookmark()" disabled>Keep my bookmark →</button>
+</section>
+
+<section class="scr" id="scr-home">
+  <div class="door" style="padding-top:2px">
+    <div class="lamp">🏮</div>
+    <h1 class="title" style="font-size:26px">The Moonlight Library</h1>
+  </div>
+  <div class="lumiRow">
+    <div class="lumiWrap" id="homeLumi" onclick="tapLumi()"></div>
+    <div class="bubble" id="homeBubble">Welcome to your library, Sreshta!</div>
+  </div>
+  <div id="homeBody"></div>
+</section>
+
+<section class="scr" id="scr-mission">
+  <div class="topbar"><button class="tb" onclick="leaveMission()">← Library</button><span class="crumb" id="missionCrumb">Story</span></div>
+  <div id="missionBody"></div>
+</section>
+
+<section class="scr" id="scr-dash">
+  <div class="topbar"><button class="tb" onclick="show('scr-access')">← Exit</button><span class="crumb">Parents — Story World Dashboard</span></div>
+  <div class="dashNav">
+    <button data-d="ov" onclick="dashGo('ov')">Overview</button>
+    <button data-d="lib" onclick="dashGo('lib')">Library</button>
+    <button data-d="map" onclick="dashGo('map')">Reading Map</button>
+    <button data-d="shelf" onclick="dashGo('shelf')">Story Shelf</button>
+    <button data-d="ctrl" onclick="dashGo('ctrl')">Controls</button>
+  </div>
+  <div id="dash-ov"></div><div id="dash-lib"></div><div id="dash-map"></div><div id="dash-shelf"></div><div id="dash-ctrl"></div>
+  <p class="foot">Story World keeps everything on this device only — progress, tales and reviews live here, not in any cloud.</p>
+</section>
+
+<a id="islandBackBtn" href="https://raghuramsuda-sys.github.io/sreshta-universe/" aria-label="Back to Starlight Island dashboard">&#8592; Island</a>
+<script>(function(){var b=document.getElementById("islandBackBtn");if(!b)return;function upd(){var on=document.querySelector(".scr.on");var show=!on||on.id==="scr-access"||on.id==="scr-home";b.style.display=show?"inline-flex":"none";}upd();new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:["class"],subtree:true});})();</script>
+<script>
+"use strict";
+/* ================= DATA ================= */
+
+const LUMI_SVG = `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lumi the firefly">
+  <defs><radialGradient id="lumiglow" cx="50%" cy="55%" r="50%">
+    <stop offset="0%" stop-color="#FFE98A" stop-opacity="0.95"/>
+    <stop offset="55%" stop-color="#FFC94D" stop-opacity="0.45"/>
+    <stop offset="100%" stop-color="#FFC94D" stop-opacity="0"/>
+  </radialGradient></defs>
+  <circle cx="60" cy="62" r="52" fill="url(#lumiglow)">
+    <animate attributeName="r" values="48;54;48" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="38" cy="42" rx="17" ry="9" fill="#FFFFFF" opacity="0.75" transform="rotate(-32 38 42)"/>
+  <ellipse cx="84" cy="40" rx="17" ry="9" fill="#FFFFFF" opacity="0.75" transform="rotate(30 84 40)"/>
+  <ellipse cx="61" cy="72" rx="17" ry="24" fill="#FFB52E"/>
+  <ellipse cx="61" cy="80" rx="12.5" ry="16" fill="#FFD23E">
+    <animate attributeName="opacity" values="1;0.55;1" dur="2.6s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="60" cy="42" r="13" fill="#5B3A1E"/>
+  <path d="M52 31 Q46 20 40 18" stroke="#5B3A1E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <path d="M68 31 Q74 20 80 18" stroke="#5B3A1E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <circle cx="40" cy="17" r="3.4" fill="#FFD23E"/><circle cx="80" cy="17" r="3.4" fill="#FFD23E"/>
+  <circle cx="55.5" cy="41" r="2.2" fill="#FFF6E3"/><circle cx="64.5" cy="41" r="2.2" fill="#FFF6E3"/>
+  <path d="M55 48 Q60 52 65 48" stroke="#FFF6E3" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="50" cy="46" r="2.6" fill="#FF9EBB" opacity="0.8"/><circle cx="70" cy="46" r="2.6" fill="#FF9EBB" opacity="0.8"/>
+</svg>`;
+
+const BOOKMARKS = [
+  { id: "rose", name: "Rose Pink", color: "#EF6AA5", emoji: "🌸" },
+  { id: "teal", name: "Peacock Teal", color: "#2BB3A3", emoji: "🦚" },
+  { id: "gold", name: "Marigold Gold", color: "#F2B134", emoji: "🌼" },
+  { id: "sky", name: "Sky Blue", color: "#57A8E8", emoji: "☁️" }
+];
+
+const SEED_STORY = {
+  title: `The Little Seed`,
+  pages: [
+    [`Mia put a tiny seed in a pot of soft mud.`, `"Grow, little seed, grow," she said.`, `Every day, she gave the seed a cup of water.`, `She kept the pot in the warm sun near her door.`],
+    [`For five days, nothing green came out of the mud.`, `Mia waited and waited. "Are you sleeping, little seed?" she asked.`, `On the sixth day, she saw a small green leaf.`, `"You are awake!" Mia clapped with joy.`],
+    [`Day by day, the leaf grew tall and strong.`, `Soon, a pink bud opened into a happy flower.`, `Mia smiled. "Good things take time," she said.`]
+  ],
+  pics: ["🌱", "💧", "🌸"],
+  map: [`Mia puts a tiny seed in a pot`, `Mia gives the seed water and sun`, `Mia waits and waits`, `A small green leaf comes out`, `A happy flower opens`]
+};
+
+const STORIES = [
+  {
+    id: "s1", n: 1, title: `The Lost Kite`,
+    teaser: `A windy day, a snap, and a new friend.`,
+    lumi: `This kite wants to touch the sky. Will it? Let's see...`,
+    pages: [
+      [`Ria took her new red kite to the park near her home.`, `"Today, my kite will touch the sky!" she said.`],
+      [`She ran fast, and the kite rose up, up, up.`, `It danced over the mango tree.`, `It waved at the clouds.`],
+      [`Just then, a strong wind pulled the string.`, `Snap!`, `The string broke.`, `"Oh no!" cried Ria.`, `The kite flew away and fell on the other side of the big mango tree.`],
+      [`Ria ran around the tree.`, `Her eyes filled with tears.`, `The kite was not there.`, `Then she heard a small voice.`, `"Is this yours?"`],
+      [`A little boy stood under the tree.`, `He held the red kite in his hands.`, `A puppy sat near his feet, looking up at the kite.`, `"My kite!" Ria smiled.`, `"Thank you! My name is Ria. What is your name?"`, `"I am Kabir," said the boy. "Your kite flew to us."`],
+      [`"Will you fly it with me?" asked Ria.`, `Kabir's eyes shone.`, `"Yes, please!"`, `They tied the string again.`, `This time, they held it together.`, `The red kite rose into the sky, and two new friends laughed below it.`]
+    ],
+    pics: ["🪁", "☁️", "💨", "🌳", "🐶", "👫"],
+    glow: [
+      { w: "rose", m: "went up", e: "The kite rose into the sky." },
+      { w: "tears", m: "the water that comes from our eyes when we are sad", e: "Ria's eyes filled with tears." },
+      { w: "shone", m: "looked bright with happiness", e: "Kabir's eyes shone." }
+    ],
+    map: [`Ria flies her kite`, `The string breaks`, `Ria cannot find the kite`, `Kabir has the kite`, `They fly it together`],
+    check: [
+      { kind: "fact", q: `Where did the kite fall?`, opts: [`On the other side of the big mango tree`, `On the roof of a tall house`, `In the middle of the road`], a: 0, ans: `On the other side of the big mango tree.` },
+      { kind: "feel", q: `Why did Ria's eyes fill with tears?`, opts: [`She loved her new kite and thought it was lost`, `She was feeling very sleepy`, `A leaf fell on her shoe`], a: 0, ans: `She loved her new kite and thought it was lost.` },
+      { kind: "open", q: `The story ends with two new friends. What do you think Ria and Kabir will do tomorrow?`, examples: `Fly the kite again • Play with the puppy • Read a story under the mango tree` }
+    ],
+    twist: `What if the puppy had caught the string first? What would happen then?`
+  },
+  {
+    id: "s2", n: 2, title: `Pip the Puppy Finds a Friend`,
+    teaser: `A small puppy, a tiny kitten, and one slow, soft ball.`,
+    lumi: `Pip is looking for a friend. Listen with your heart...`,
+    pages: [
+      [`Pip was a small brown puppy with a curly tail.`, `He lived in a house with a red gate and a big yard.`, `Every morning, Pip ran to the gate to say hello.`],
+      [`But no dog or cat lived near his house.`, `"I feel so lonely," said Pip.`, `"I want a friend to play with."`],
+      [`One day, Pip heard a soft sound near the mango tree.`, `"Mew, mew," said the sound.`, `A tiny grey kitten sat under the tree.`, `Her name was Mili.`],
+      [`"Will you play with me?" asked Pip.`, `Mili took one step back.`, `"You are big," she said.`],
+      [`Pip sat down and made himself small.`, `"I can be gentle," he said.`, `Pip rolled his ball to Mili, slow and soft.`],
+      [`Mili tapped the ball with her paw.`, `It rolled back to Pip!`, `Then a leaf fell from the tree.`, `Pip chased it round and round.`, `Mili laughed and chased it too.`, `From that day, Pip and Mili played every morning.`, `Pip was not lonely any more.`, `He had a true friend at last.`]
+    ],
+    pics: ["🐶", "🏠", "🐱", "🐾", "🎾", "🍂"],
+    glow: [
+      { w: "lonely", m: "feeling sad because you are alone", e: "Pip felt lonely at the gate." },
+      { w: "gentle", m: "soft and kind, not rough", e: "Pip was gentle with tiny Mili." },
+      { w: "chased", m: "ran after something, fast", e: "Pip chased the leaf round the tree." }
+    ],
+    map: [`Pip feels lonely at his gate`, `Pip hears a sound near the tree`, `Mili the kitten feels a little shy`, `Pip plays slow and gentle`, `Pip and Mili play every day`],
+    check: [
+      { kind: "fact", q: `Where did Pip hear the soft sound?`, opts: [`Near the mango tree`, `Inside a big box`, `Down by the river`], a: 0, ans: `Near the mango tree.` },
+      { kind: "feel", q: `Why did Mili take one step back?`, opts: [`Pip looked big to her, so she felt a little shy at first`, `She wanted to run home at once`, `She did not like balls at all`], a: 0, ans: `Pip looked big to her, so she felt a little shy at first.` },
+      { kind: "open", q: `What game do you think Pip and Mili will play tomorrow?`, examples: `Hide and seek • Ball again, slow and soft • Chasing leaves in the yard` }
+    ],
+    twist: `What if a small bird wanted to join Pip and Mili? What would Pip do to be gentle with the bird?`
+  },
+  {
+    id: "s3", n: 3, title: `The Mango Tree Secret`,
+    teaser: `A talking parrot, a hidden branch, and the sweetest mangoes of all.`,
+    lumi: `Shhh... this tree keeps a secret. Read and find it!`,
+    pages: [
+      [`In Tara's yard stood a big, old mango tree.`, `Every summer, Tara sat under the tree and read her books.`, `One hot day, Tara heard a small sound in the tree.`],
+      [`"Who is there?" she asked.`, `A soft voice came from the green leaves.`, `"It is me."`, `It was Kuku, a small green parrot!`],
+      [`"You can talk!" said Tara with wide eyes.`, `"Only a little," said Kuku.`, `"And I keep a secret too."`, `"What secret?" asked Tara.`],
+      [`Kuku moved a big leaf with his foot.`, `Behind the leaf hung three ripe mangoes, gold and sweet.`, `Kuku flew down to a low branch.`],
+      [`In a whisper, he said, "The best mangoes hide up here."`, `Tara picked one mango and took a big bite.`, `"This is the sweetest mango of all!" she said.`],
+      [`Then Tara had a happy idea.`, `She picked the other two mangoes and shared them with her friends.`, `Kuku got a small piece too.`],
+      [`"Secrets are good," said Tara.`, `"But a shared mango is even better!"`, `Kuku flapped his wings.`, `"Now that," he said, "is the best secret of all."`]
+    ],
+    pics: ["🥭", "🦜", "🦜", "🥭", "😋", "👭", "⭐"],
+    glow: [
+      { w: "whisper", m: "to talk very, very softly", e: "Kuku spoke in a whisper." },
+      { w: "ripe", m: "ready to eat, sweet and soft", e: "The ripe mangoes were gold and sweet." },
+      { w: "shared", m: "gave some to others, to enjoy too", e: "Tara shared the mangoes with her friends." }
+    ],
+    map: [`Tara hears a sound in the tree`, `Kuku the parrot talks to Tara`, `Kuku shows the hidden ripe mangoes`, `Tara tastes the sweetest mango`, `Tara shares the mangoes with her friends`],
+    check: [
+      { kind: "fact", q: `What was hiding behind the big leaf?`, opts: [`Three ripe mangoes`, `A small bird nest`, `Two red flowers`], a: 0, ans: `Three ripe mangoes.` },
+      { kind: "feel", q: `Why did Tara share the mangoes with her friends?`, opts: [`She wanted her friends to taste the sweet mangoes too`, `The mangoes were too heavy to hold`, `Kuku told her she must share at once`], a: 0, ans: `She wanted her friends to taste the sweet mangoes too.` },
+      { kind: "open", q: `Next summer, what secret do you think Kuku will show Tara?`, examples: `A hidden nest • A rainbow feather • A tiny new mango tree` }
+    ],
+    twist: `What if YOU found the mango tree secret? Who would you share the first mango with, and why?`
+  }
+];
+
+const LOCKED_TITLES = [
+  `Zara and the Rainy-Day Umbrella`, `The Little Lamp That Would Not Sleep`, `A Picnic for Teddy`,
+  `The Clever Crow and the Pot of Water`, `Nina's Red Bicycle`, `The Moon Comes to Tea`, `The Box That Made Music`
+];
+const STAGE_PREVIEWS = [
+  { n: 2, name: `Read Like a Pro`, note: `Stories grow to 200-300 words — smooth, happy reading aloud.` },
+  { n: 3, name: `Understand Deeply`, note: `Why did she do that? Feelings, guesses, and new endings.` },
+  { n: 4, name: `Build My Story`, note: `Your own tales begin — a hero, a problem, an ending you invent.` },
+  { n: 5, name: `Young Author`, note: `Your own full stories, and a family story book with your name on it.` }
+];
+const LUMI_LINES = [
+  `Every big library starts with one book. Yours is growing!`,
+  `Psst... a book spine appears every time you finish a story.`,
+  `Your Word Jars are filling with light. Tap one in a story!`,
+  `I love the way you read, Sreshta. Slow and clear wins.`,
+  `What story shall we open today? The shelf is listening...`
+];
+
+/* ================= STATE ================= */
+const LS_KEY = "storyworld_v1";
+const STORY_STARS = 5;
+function freshState() {
+  return { v: 1, baseline: null, baseDraft: null, bookmark: null, done: [], stars: 0,
+    reviews: {}, jars: {}, shelf: [], nextReward: `Choose a real book from the bookshop 📚` };
+}
+let S = freshState();
+try { const raw = localStorage.getItem(LS_KEY); if (raw) { const p = JSON.parse(raw); if (p && p.v === 1) { const f = freshState(); Object.assign(f, p); S = f; } } } catch (e) {}
+function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} }
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+function show(id) { $$('.scr').forEach(x => x.classList.toggle('on', x.id === id)); window.scrollTo(0, 0); }
+function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function lumiHTML(cls) { return `<div class="lumiWrap ${cls || ""}">${LUMI_SVG}</div>`; }
+function lumiLine(text, cls) { return `<div class="lumiRow">${lumiHTML(cls)}<div class="bubble">${text}</div></div>`; }
+
+/* ================= PIN ================= */
+let pinRole = "child", pinBuf = "";
+function openPin(role) { pinRole = role; pinBuf = ""; $("#pinMsg").textContent = ""; $("#pinTitle").textContent = role === "child" ? "Sreshta's PIN" : "Parents' PIN"; drawDots(); show("scr-pin"); }
+function drawDots() { $$("#pinDots span").forEach((sp, i) => sp.classList.toggle("f", i < pinBuf.length)); }
+function pinKey(k) {
+  if (k === "C") pinBuf = ""; else if (k === "⌫") pinBuf = pinBuf.slice(0, -1); else if (pinBuf.length < 4) pinBuf += k;
+  drawDots();
+  if (pinBuf.length === 4) {
+    const want = pinRole === "child" ? "2017" : "2208";
+    if (pinBuf === want) { pinBuf = ""; if (pinRole === "child") { goHome(); } else { renderDash(); show("scr-dash"); dashGo("ov"); } }
+    else { $("#pinMsg").textContent = "That PIN did not match — try again!"; pinBuf = ""; drawDots(); }
+  }
+}
+
+/* ================= BASELINE ================= */
+let BP = 0; // baseline seed page
+let baseMapPlaced = [];
+function draft() { if (!S.baseDraft) S.baseDraft = { support: null, mapDone: false, retell: "", tale: null }; return S.baseDraft; }
+function startBaseline() { BP = 0; baseMapPlaced = []; renderBase(); show("scr-base"); }
+function shuffledOrder(n) { const a = Array.from({ length: n }, (_, i) => i); return a.map((v, i) => a[(i + 2) % n]).map((v, i, arr) => arr[i]); }
+function baseStep() {
+  if (S.baseline) return "done";
+  const d = S.baseDraft; if (!d || !d.support) return "read";
+  if (!d.mapDone) return "map";
+  return "tale";
+}
+function renderBase() {
+  const B = $("#baseBody");
+  if (S.baseline) {
+    const bl = S.baseline;
+    B.innerHTML = `<div class="card creamy cele"><h3 class="baloo" style="margin:2px 0">📚 My First Books — safe forever</h3>
+      <p style="font-weight:700">Reading start: <b>${esc(bl.supportLabel)}</b></p>
+      <p style="font-weight:700">First story: <b>${esc(SEED_STORY.title)}</b> 🌱</p>
+      ${bl.retell ? `<p style="font-weight:700">Her Tell-It-Back: “${esc(bl.retell)}”</p>` : ``}
+      <p style="font-weight:700">Her Tiny Tale: ${esc(bl.tale.who)} + ${esc(bl.tale.where)} + ${esc(bl.tale.end)}</p>
+      ${bl.tale.sents.filter(Boolean).map(s => `<p style="font-weight:700">“${esc(s)}”</p>`).join("")}
+      <button class="btn" onclick="goHome()">Back to my library →</button></div>`;
+    return;
+  }
+  const step = baseStep();
+  if (step === "read") {
+    const pg = SEED_STORY.pages[BP];
+    B.innerHTML = `<div class="stepTag">DAY 1 • READ ALOUD (B1)</div>
+      <h3 class="baloo" style="color:var(--goldlt);margin:4px 0">${esc(SEED_STORY.title)}</h3>
+      <p style="font-weight:700;color:#D9C8FF">Read this little story aloud, in your own voice. A Mom or Dad can listen — nobody will read it for you.</p>
+      <div class="page"><div class="pic">${SEED_STORY.pics[BP]}</div>${pg.map(s => `<p>${esc(s)}</p>`).join("")}</div>
+      <div class="pgNav">
+        <button class="btn ghost" onclick="basePage(-1)" ${BP === 0 ? "disabled" : ""}>← Page back</button>
+        ${BP < SEED_STORY.pages.length - 1
+          ? `<button class="btn" onclick="basePage(1)">Next page →</button>`
+          : `<button class="btn" onclick="baseReadDone()">I read it aloud ✓</button>`}
+      </div>
+      <div id="supportBox"></div>`;
+    return;
+  }
+  if (step === "map") {
+    const order = shuffledOrder(SEED_STORY.map.length);
+    B.innerHTML = `<div class="stepTag">DAY 1 • TELL IT BACK (B2)</div>
+      ${lumiLine(`Tap the parts of ${esc(SEED_STORY.title)} in the order they happened. Then, if you like, tell it in your own words below.`)}
+      <div id="baseSlots">${SEED_STORY.map.map((_, i) => `<div class="slot" id="bslot${i}">${i + 1}. …</div>`).join("")}</div>
+      <div id="baseTiles">${order.map(ix => `<button class="tile" id="btile${ix}" onclick="baseMapTap(${ix})">${esc(SEED_STORY.map[ix])}</button>`).join("")}</div>
+      <textarea id="baseRetell" rows="3" placeholder="Her Tell-It-Back, in her own words (optional — a parent can type)">${esc((S.baseDraft && S.baseDraft.retell) || "")}</textarea>
+      <button class="btn" id="baseMapBtn" onclick="baseSaveRetell()" disabled>Save my Tell-It-Back →</button>`;
+    return;
+  }
+  // tale step
+  const groups = [
+    { key: "who", label: "Pick a hero", opts: [["🐶", "Pup"], ["🐱", "Kitty"], ["🦋", "Butterfly"], ["🐦", "Birdie"]] },
+    { key: "where", label: "Pick a place", opts: [["🌳", "Under a tree"], ["🌈", "Near a rainbow"], ["⭐", "Under the stars"], ["🏖️", "By the sea"]] },
+    { key: "end", label: "Pick a happy ending", opts: [["🎈", "Finds a balloon"], ["🍓", "Finds sweet berries"], ["🎵", "Hears a happy song"], ["💤", "Takes a sweet nap"]] }
+  ];
+  window._taleGroups = groups;
+  B.innerHTML = `<div class="stepTag">DAY 1 • MY TINY TALE (B3)</div>
+    ${lumiLine(`Last Day-1 gift! Pick three pictures and make your very first tiny tale. Add a sentence for each picture if you like.`)}
+    ${groups.map((g, gi) => `<div class="card"><div class="baloo" style="font-size:17px">${g.label}</div>
+      <div class="pickGrid">${g.opts.map((o, oi) => `<button class="pick" id="tpick${gi}_${oi}" onclick="basePick(${gi},${oi})">${o[0]}<br>${o[1]}</button>`).join("")}</div>
+      <input type="text" id="tsent${gi}" placeholder="Her sentence for this picture (optional)"></div>`).join("")}
+    <button class="btn" id="taleBtn" onclick="baseSaveTale()" disabled>Finish my Tiny Tale ⭐</button>`;
+}
+let talePicks = [null, null, null];
+function basePage(d) { BP = Math.max(0, Math.min(SEED_STORY.pages.length - 1, BP + d)); renderBase(); }
+function baseReadDone() {
+  $("#supportBox").innerHTML = `<div class="card creamy"><div class="baloo" style="font-size:18px">A Mom or Dad taps: how did Sreshta read?</div>
+    <button class="opt" style="background:#F3DFA7;color:var(--ink);border-color:#D9B94A" onclick="baseSupport('alone','Read alone 🌟')">🌟 Read alone</button>
+    <button class="opt" style="background:#F3DFA7;color:var(--ink);border-color:#D9B94A" onclick="baseSupport('help','Read with a little help ⭐')">⭐ Read with a little help</button>
+    <button class="opt" style="background:#F3DFA7;color:var(--ink);border-color:#D9B94A" onclick="baseSupport('together','Read together 💛')">💛 Read together</button></div>`;
+}
+function baseSupport(level, label) { const d = draft(); d.support = level; d.supportLabel = label; save(); renderBase(); }
+function baseMapTap(ix) {
+  const want = baseMapPlaced.length;
+  if (ix === want) {
+    baseMapPlaced.push(ix);
+    const slot = $("#bslot" + ix); if (slot) { slot.classList.add("full"); slot.textContent = (ix + 1) + ". " + SEED_STORY.map[ix]; }
+    const tile = $("#btile" + ix); if (tile) { tile.classList.add("placed"); tile.disabled = true; }
+    if (baseMapPlaced.length === SEED_STORY.map.length) { const b = $("#baseMapBtn"); if (b) b.disabled = false; }
+  } else {
+    const tile = $("#btile" + ix); if (tile) { tile.classList.remove("wig"); void tile.offsetWidth; tile.classList.add("wig"); }
+  }
+}
+function baseSaveRetell() {
+  const d = draft(); d.mapDone = true; const t = $("#baseRetell"); d.retell = t ? t.value.trim() : ""; save(); talePicks = [null, null, null]; renderBase();
+}
+function basePick(gi, oi) {
+  talePicks[gi] = oi;
+  window._taleGroups[gi].opts.forEach((_, j) => { const el = $("#tpick" + gi + "_" + j); if (el) el.classList.toggle("sel", j === oi); });
+  const b = $("#taleBtn"); if (b) b.disabled = talePicks.some(p => p === null);
+}
+function baseSaveTale() {
+  const d = draft(); const g = window._taleGroups;
+  const tale = {
+    who: g[0].opts[talePicks[0]][0] + " " + g[0].opts[talePicks[0]][1],
+    where: g[1].opts[talePicks[1]][0] + " " + g[1].opts[talePicks[1]][1],
+    end: g[2].opts[talePicks[2]][0] + " " + g[2].opts[talePicks[2]][1],
+    sents: [0, 1, 2].map(i => { const el = $("#tsent" + i); return el ? el.value.trim() : ""; })
+  };
+  S.baseline = { support: d.support, supportLabel: d.supportLabel, retell: d.retell || "", tale, date: new Date().toISOString().slice(0, 10) };
+  S.baseDraft = null; save();
+  if (!S.bookmark) { renderBookmark(); show("scr-pick"); } else { renderBase(); }
+}
+
+/* ================= BOOKMARK ================= */
+let pendingBookmark = null;
+function renderBookmark() {
+  pendingBookmark = S.bookmark;
+  $("#bookmarkGrid").innerHTML = BOOKMARKS.map(b => `<button class="pick ${pendingBookmark === b.id ? "sel" : ""}" id="bm_${b.id}" onclick="pickBookmark('${b.id}')"><span style="font-size:26px">${b.emoji}</span><br>${b.name}<br><span style="display:inline-block;width:44px;height:14px;border-radius:4px;background:${b.color};margin-top:5px"></span></button>`).join("");
+  $("#bookmarkBtn").disabled = !pendingBookmark;
+}
+function pickBookmark(id) { pendingBookmark = id; BOOKMARKS.forEach(b => { const el = $("#bm_" + b.id); if (el) el.classList.toggle("sel", b.id === id); }); $("#bookmarkBtn").disabled = false; }
+function saveBookmark() { if (!pendingBookmark) return; S.bookmark = pendingBookmark; save(); goHome(); }
+function bookmarkColor() { const b = BOOKMARKS.find(x => x.id === S.bookmark); return b ? b.color : "#F2B134"; }
+
+/* ================= HOME ================= */
+let lumiIx = 0;
+function tapLumi() { lumiIx = (lumiIx + 1) % LUMI_LINES.length; $("#homeBubble").textContent = LUMI_LINES[lumiIx]; const w = $("#homeLumi"); w.style.animation = "none"; void w.offsetWidth; w.style.animation = ""; }
+function missionUnlocked(i) { return !!S.baseline && (i === 0 || S.done.includes(STORIES[i - 1].id)); }
+function goHome() { renderHome(); show("scr-home"); }
+function spineHTML(st) {
+  return `<div class="spine" style="background:linear-gradient(180deg,#8B6FD8,#6D4FC2)"><div class="band" style="background:${bookmarkColor()}"></div><div class="st">${esc(st.title)}</div></div>`;
+}
+function renderHome() {
+  $("#homeLumi").innerHTML = LUMI_SVG;
+  const doneCount = S.done.length;
+  const jarCount = doneCount * 3;
+  let stand = "";
+  if (!S.baseline) {
+    $("#homeBubble").textContent = "Welcome! Before the stories open, we have one small Day-1 adventure — your First Books.";
+    stand = `<div class="stand"><h3>DAY 1 • MY FIRST BOOKS</h3><div class="ct">Your Story World Adventure</div><div class="tz">Read one tiny story, tell it back, and make your own mini tale.</div><button onclick="startBaseline()">Start Day 1 →</button></div>`;
+  } else if (!S.bookmark) {
+    $("#homeBubble").textContent = "Your First Books are safe! One tiny thing left — pick your bookmark.";
+    stand = `<div class="stand"><h3>ALMOST THERE</h3><div class="ct">Pick your bookmark 🎗️</div><div class="tz">Your colour will hold your page in every book.</div><button onclick="renderBookmark();show('scr-pick')">Pick my bookmark →</button></div>`;
+  } else {
+    const next = STORIES.find(st => !S.done.includes(st.id));
+    if (next) {
+      $("#homeBubble").textContent = "Welcome back, Sreshta! Your shelf missed you.";
+      stand = `<div class="stand"><h3>TODAY'S STORY</h3><div class="ct">${esc(next.title)}</div><div class="tz">${esc(next.teaser)}</div><button onclick="startMission(${next.n - 1})">Open the book →</button></div>`;
+    } else {
+      $("#homeBubble").textContent = "All three sample stories are on your shelf. The full library is coming soon!";
+      stand = `<div class="stand"><h3>SHELF COMPLETE ⭐</h3><div class="ct">You finished the sample stories!</div><div class="tz">Stories 4-10 are on their way in the full Story World.</div></div>`;
+    }
+  }
+  const shelfSpines = S.done.map(id => spineHTML(STORIES.find(s => s.id === id))).join("");
+  const firstBooks = S.baseline ? `<div class="card"><div class="baloo" style="font-size:17px">🖼️ My First Books</div>
+      <p style="font-weight:700;margin:5px 0">Day 1 is locked in gold: ${esc(SEED_STORY.title)} + her Tiny Tale (${esc(S.baseline.tale.who.split(" ")[0])} ${esc(S.baseline.tale.where.split(" ")[0])} ${esc(S.baseline.tale.end.split(" ")[0])})</p>
+      <button class="btn ghost" onclick="startBaseline()">See my First Books →</button></div>` : "";
+  const missionRows = STORIES.map((st, i) => {
+    const done = S.done.includes(st.id); const un = missionUnlocked(i);
+    return `<button class="mrow ${done ? "done" : ""} ${un ? "" : "lock"}" ${un ? `onclick="startMission(${i})"` : ""}>
+      <span class="no">${done ? "✓" : st.n}</span><span><span class="mt">${esc(st.title)}</span><br>
+      <span class="ms">${done ? "On your shelf ⭐ Read again any time" : un ? "Ready to read →" : "Finish the story before this one first"}</span></span></button>`;
+  }).join("") + LOCKED_TITLES.map((t, i) => `<div class="mrow lock"><span class="no">${i + 4}</span><span><span class="mt">${esc(t)}</span><br><span class="ms">Coming in the full Story World 🔒</span></span></div>`).join("");
+  const stageCards = STAGE_PREVIEWS.map(p => `<div class="stageCard"><span class="st1">Stage ${p.n} — ${esc(p.name)} 🔒</span><br><span style="font-size:13px;font-weight:700">${esc(p.note)}</span></div>`).join("");
+  const shelfRows = S.shelf.length ? S.shelf.slice().reverse().map((t, ri) => {
+    const ix = S.shelf.length - 1 - ri;
+    return `<button class="taleRow" onclick="viewTale(${ix})"><span style="font-size:20px">📕</span><span><b>${esc(t.title)}</b><br><span style="font-size:12px;color:#D9C8FF">${esc(t.date)}</span></span></button>`;
+  }).join("") : `<p style="font-weight:700;color:#D9C8FF;margin:4px 0">Your twist tales will live here. Finish a story to add your first one!</p>`;
+  $("#homeBody").innerHTML = `
+    <div class="grid3">
+      <div class="stat"><div class="n">Little Reader</div><div class="l">READER TITLE</div></div>
+      <div class="stat"><div class="n">${doneCount} 📚</div><div class="l">STORIES SHELVED</div></div>
+      <div class="stat"><div class="n">${S.stars} ⭐</div><div class="l">STARS</div></div>
+    </div>
+    ${stand}
+    <div class="shelfWrap"><div class="baloo" style="font-size:16px;color:var(--goldlt)">📚 My Bookshelf</div>
+      <div class="shelf">${shelfSpines || `<div class="emptyShelf">Your shelf is ready and waiting.<br>Finish a story and its book will stand here!</div>`}</div><div class="woodbar"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:13px;color:#D9C8FF">🏺 Word Jars: ${jarCount} words glowing</span><span style="font-weight:800;font-size:13px;color:#D9C8FF">Bookmark: ${S.bookmark ? esc((BOOKMARKS.find(b => b.id === S.bookmark) || {}).name || "") : "not picked yet"}</span></div>
+    </div>
+    ${firstBooks}
+    <div class="card"><div class="baloo" style="font-size:17px">🎁 Next Reward</div><p style="font-weight:700;margin:5px 0">${esc(S.nextReward)}</p></div>
+    <h3 class="baloo" style="color:var(--goldlt);margin:12px 0 2px">Stage 1 — Story Explorer</h3>
+    ${missionRows}
+    <h3 class="baloo" style="color:var(--goldlt);margin:14px 0 2px">Coming Next</h3>
+    ${stageCards}
+    <div class="card"><div class="baloo" style="font-size:17px">📕 My Story Shelf — tales by Sreshta</div><div id="taleView"></div>${shelfRows}</div>
+    <p class="foot">Stories live on this device. Read a little, imagine a lot. 🌙</p>`;
+}
+function viewTale(ix) {
+  const t = S.shelf[ix]; if (!t) return;
+  const v = $("#taleView");
+  v.innerHTML = `<div class="card creamy"><div class="baloo" style="font-size:17px">${esc(t.title)}</div><p style="font-weight:700;white-space:pre-wrap">${esc(t.text)}</p><button class="btn plum" onclick="document.getElementById('taleView').innerHTML=''">Close</button></div>`;
+  v.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/* ================= MISSION ================= */
+let M = null;
+function sentenceHTML(st, sent) {
+  let out = esc(sent);
+  st.glow.forEach(g => {
+    const re = new RegExp("\\b(" + g.w + ")\\b", "gi");
+    out = out.replace(re, `<span class="gloww" onclick="glowTap('${g.w}')">$1</span>`);
+  });
+  return out;
+}
+function startMission(i) {
+  if (!missionUnlocked(i)) return false;
+  M = { ix: i, step: 1, page: 0, mapPlaced: [], chkIx: 0, chkPicked: -1, openShown: false, jarWord: null, done: S.done.includes(STORIES[i].id) };
+  $("#missionCrumb").textContent = "Story " + STORIES[i].n + " of 10 • Stage 1";
+  renderMission(); show("scr-mission"); return true;
+}
+function leaveMission() { M = null; goHome(); }
+function mStep(n) { M.step = n; renderMission(); }
+function renderMission() {
+  const st = STORIES[M.ix]; const B = $("#missionBody");
+  const tag = `<div class="stepTag">STEP ${M.step} OF 7</div>`;
+  if (M.step === 1) {
+    B.innerHTML = `${tag}
+      <div class="card creamy" style="text-align:center">
+        <div style="font-size:54px">📖</div>
+        <h2 class="baloo" style="margin:2px 0;font-size:25px">${esc(st.title)}</h2>
+        <p style="font-weight:700;font-size:16px">${esc(st.teaser)}</p>
+      </div>
+      ${lumiLine(esc(st.lumi))}
+      <button class="btn" onclick="mStep(2)">Start reading →</button>`;
+    return;
+  }
+  if (M.step === 2) {
+    const pg = st.pages[M.page];
+    B.innerHTML = `${tag}
+      <h3 class="baloo" style="color:var(--goldlt);margin:4px 0">${esc(st.title)}</h3>
+      <div class="page"><div class="pic">${st.pics[M.page] || "📖"}</div>
+        ${pg.map(s => `<p>${sentenceHTML(st, s)}</p>`).join("")}
+        <div style="display:flex;gap:10px;align-items:center;margin-top:8px"><span style="font-size:26px">✨</span><span style="font-weight:800;font-size:12.5px;color:#8A6D00">Gold words glow — tap one to see what it means!</span></div>
+      </div>
+      <div id="glowPop"></div>
+      <div class="lumiRow">${lumiHTML("dim")}<div class="bubble" style="font-size:15px">I will sit quietly in the corner while you read. You are doing great.</div></div>
+      <div class="pgNav">
+        <button class="btn ghost" onclick="mPage(-1)" ${M.page === 0 ? "disabled" : ""}>← Page back</button>
+        ${M.page < st.pages.length - 1
+          ? `<button class="btn" onclick="mPage(1)">Next page →</button>`
+          : `<button class="btn" onclick="mStep(3)">I finished the story ✓</button>`}
+      </div>`;
+    return;
+  }
+  if (M.step === 3) {
+    const order = shuffledOrder(st.map.length);
+    B.innerHTML = `${tag}
+      ${lumiLine(`Let's build the Story Map! Tap the parts of the story in the order they happened.`)}
+      <div id="mSlots">${st.map.map((_, i) => `<div class="slot" id="mslot${i}">${i + 1}. …</div>`).join("")}</div>
+      <div id="mTiles">${order.map(ix => `<button class="tile" id="mtile${ix}" onclick="mapTap(${ix})">${esc(st.map[ix])}</button>`).join("")}</div>
+      <button class="btn" id="mapNext" onclick="mStep(4)" disabled>Next: Fun Check →</button>`;
+    M.mapPlaced.forEach(ix => paintMapTile(st, ix));
+    if (M.mapPlaced.length === st.map.length) { const b = $("#mapNext"); if (b) b.disabled = false; }
+    return;
+  }
+  if (M.step === 4) {
+    const c = st.check[M.chkIx];
+    let inner = `${tag}${lumiLine(`Fun Check — question ${M.chkIx + 1} of 3. No marks here, just thinking!`)}
+      <div class="card"><div class="baloo" style="font-size:19px">${esc(c.q)}</div><div id="chkBody">`;
+    if (c.kind === "open") {
+      inner += `<textarea id="openAns" rows="3" placeholder="Her answer, in her own words (she can say it, a parent can type)"></textarea>
+        <button class="btn" onclick="openAnswerDone()">That is my answer ⭐</button>
+        <div id="openAfter"></div>`;
+    } else {
+      inner += c.opts.map((o, oi) => `<button class="opt" id="chkOpt${oi}" onclick="checkAnswer(${oi})">${esc(o)}</button>`).join("") + `<div id="chkMsg" style="font-weight:800;color:var(--goldlt);min-height:22px"></div>`;
+    }
+    inner += `</div></div>`;
+    B.innerHTML = inner;
+    return;
+  }
+  if (M.step === 5) {
+    B.innerHTML = `${tag}
+      ${lumiLine(`Three new words from this story go into your Word Jars. Tap a word to pick it, then use it in a sentence of your own — or say your sentence aloud.`)}
+      ${st.glow.map(g => `<button class="tile" id="jarW_${g.w}" onclick="jarPick('${g.w}')"><b style="font-size:18px">${esc(g.w)}</b> — ${esc(g.m)}<br><span style="font-weight:700">Like this: “${esc(g.e)}”</span></button>`).join("")}
+      <textarea id="jarSent" rows="2" placeholder="Her own sentence with the picked word..."></textarea>
+      <button class="btn" onclick="jarDone('typed')">Save my sentence ⭐</button>
+      <button class="btn ghost" onclick="jarDone('aloud')">I said it aloud ⭐</button>
+      <div id="jarMsg" style="font-weight:800;color:var(--goldlt);min-height:22px;text-align:center"></div>`;
+    return;
+  }
+  if (M.step === 6) {
+    B.innerHTML = `${tag}
+      ${lumiLine(`Now the best part — your imagination! There is no single answer here. Every idea of yours is a good one.`)}
+      <div class="card creamy"><div class="baloo" style="font-size:19px">🌀 Imagine a Twist</div>
+      <p style="font-weight:700;font-size:16.5px">${esc(st.twist)}</p>
+      <textarea id="twistText" rows="4" placeholder="Her twist tale, in her own words (she can tell it, a parent can type)"></textarea></div>
+      <button class="btn" onclick="twistDone()">Save my twist tale →</button>
+      <button class="btn ghost" onclick="twistDone()">I told it aloud →</button>`;
+    return;
+  }
+  // step 7 — shelf it + optional review
+  const first = !M.done;
+  B.innerHTML = `${tag}
+    <div class="card creamy cele" style="text-align:center">
+      <div style="font-size:46px">✨📚✨</div>
+      <h2 class="baloo" style="margin:2px 0">${first ? "Shelved it!" : "Read again — lovely!"}</h2>
+      <p style="font-weight:700">${first ? `“${esc(st.title)}” now stands on your bookshelf, with your bookmark band on its spine.` : `This book is already on your shelf — reading it again makes it shine even more.`}</p>
+      <p style="font-weight:800;font-size:17px">${first ? `+${STORY_STARS} ⭐ stars for finishing the story!` : `Stars were already twinkling for this one ⭐`}</p>
+    </div>
+    ${lumiLine(M.ix === 0 && first ? `Shelf number one. Every big library starts with one book, Sreshta.` : `Another happy reading, Sreshta. Your shelf and I are proud of you.`)}
+    <div class="card"><div class="baloo" style="font-size:17px">💛 Parent Review (only if a Mom or Dad is here — always optional)</div>
+      <div id="revBox">${reviewHTML(st)}</div></div>
+    <button class="btn" onclick="finishMission()">Back to my library →</button>`;
+}
+function reviewHTML(st) {
+  const dims = [["smooth", "Reading Smoothly"], ["understand", "Understanding"], ["imagine", "Imagination"]];
+  const vals = [["Growing", "Growing 🌱"], ["Good", "Good ⭐"], ["Pro", "Pro 🌟"]];
+  const rev = S.reviews[st.id] || {};
+  return dims.map(d => `<div style="font-weight:800;margin-top:8px">${d[1]}</div>
+    <div class="revRow">${vals.map(v => `<button class="${rev[d[0]] === v[0] ? "sel" : ""}" onclick="reviewTap('${d[0]}','${v[0]}')">${v[1]}</button>`).join("")}</div>`).join("");
+}
+function mPage(d) { const st = STORIES[M.ix]; M.page = Math.max(0, Math.min(st.pages.length - 1, M.page + d)); renderMission(); }
+function glowTap(w) {
+  const st = STORIES[M.ix]; const g = st.glow.find(x => x.w === w); if (!g) return;
+  const pop = $("#glowPop"); if (!pop) return;
+  pop.style.display = "block";
+  pop.innerHTML = `<span class="gw">${esc(g.w)}</span> — ${esc(g.m)}<br><span style="font-weight:700">Like this: “${esc(g.e)}”</span>`;
+}
+function paintMapTile(st, ix) {
+  const slot = $("#mslot" + ix); if (slot) { slot.classList.add("full"); slot.textContent = (ix + 1) + ". " + st.map[ix]; }
+  const tile = $("#mtile" + ix); if (tile) { tile.classList.add("placed"); tile.disabled = true; }
+}
+function mapTap(ix) {
+  const st = STORIES[M.ix];
+  if (ix === M.mapPlaced.length) { M.mapPlaced.push(ix); paintMapTile(st, ix); if (M.mapPlaced.length === st.map.length) { const b = $("#mapNext"); if (b) b.disabled = false; } }
+  else { const tile = $("#mtile" + ix); if (tile) { tile.classList.remove("wig"); void tile.offsetWidth; tile.classList.add("wig"); } }
+}
+function checkAnswer(oi) {
+  const st = STORIES[M.ix]; const c = st.check[M.chkIx]; if (c.kind === "open") return;
+  const msg = $("#chkMsg");
+  if (oi === c.a) {
+    const el = $("#chkOpt" + oi); if (el) el.classList.add("pick");
+    if (msg) msg.textContent = "Yes! That is what the story says. 🌟";
+    setTimeout(() => { if (!M) return; if (M.chkIx < 2) { M.chkIx++; renderMission(); } else { mStep(5); } }, 650);
+  } else {
+    if (msg) msg.textContent = "Good thinking! Read the story line once more in your mind... which one matches?";
+    const el = $("#chkOpt" + oi); if (el) { el.classList.remove("wig"); void el.offsetWidth; el.classList.add("wig"); }
+  }
+}
+function openAnswerDone() {
+  const t = $("#openAns"); const val = t ? t.value.trim() : "";
+  M.openAns = val;
+  const after = $("#openAfter"); if (!after || M.openShown) return; M.openShown = true;
+  after.innerHTML = `<div class="card" style="margin-top:8px"><div class="baloo" style="font-size:16px">Lumi loved your idea! 🌟</div>
+    <p style="font-weight:700;margin:4px 0">Some other ideas could be: ${esc(STORIES[M.ix].check[2].examples)}</p>
+    <button class="btn" onclick="mStep(5)">Next: Word Jars →</button></div>`;
+}
+function jarPick(w) { M.jarWord = w; STORIES[M.ix].glow.forEach(g => { const el = $("#jarW_" + g.w); if (el) el.style.borderColor = g.w === w ? "#2F9E44" : "#D9B94A"; }); }
+function jarDone(mode) {
+  const st = STORIES[M.ix];
+  const word = M.jarWord || st.glow[0].w;
+  let sentence = "";
+  if (mode === "typed") { const t = $("#jarSent"); sentence = t ? t.value.trim() : ""; if (!sentence) { const m = $("#jarMsg"); if (m) m.textContent = "Type a little sentence first — or tap “I said it aloud”. You can do it!"; return; } }
+  S.jars[st.id] = { word, sentence, aloud: mode === "aloud", date: new Date().toISOString().slice(0, 10) };
+  save(); mStep(6);
+}
+function twistDone() {
+  const st = STORIES[M.ix];
+  const t = $("#twistText"); const text = t ? t.value.trim() : "";
+  S.shelf.push({ storyId: st.id, title: `My Twist — ${st.title}`, text: text || `(Told aloud — a twist tale with no saved words.)`, date: new Date().toISOString().slice(0, 10) });
+  if (!S.done.includes(st.id)) { S.done.push(st.id); S.stars += STORY_STARS; }
+  save(); M.step = 7; renderMission();
+}
+function reviewTap(dim, val) {
+  const st = STORIES[M.ix];
+  if (!S.reviews[st.id]) S.reviews[st.id] = {};
+  S.reviews[st.id][dim] = val; save();
+  const box = $("#revBox"); if (box) box.innerHTML = reviewHTML(st);
+}
+function finishMission() { M = null; goHome(); }
+
+/* ================= DASHBOARD ================= */
+function dashGo(p) {
+  ["ov", "lib", "map", "shelf", "ctrl"].forEach(x => { const el = $("#dash-" + x); if (el) el.classList.toggle("hidden", x !== p); });
+  $$(".dashNav button").forEach(b => b.classList.toggle("sel", b.dataset.d === p));
+}
+function renderDash() {
+  const doneCount = S.done.length;
+  $("#dash-ov").innerHTML = `<div class="card"><div class="baloo" style="font-size:19px">Overview</div>
+    <div class="grid3" style="margin-top:8px">
+      <div class="stat"><div class="n">Stage 1</div><div class="l">STAGE</div></div>
+      <div class="stat"><div class="n">Little Reader</div><div class="l">READER TITLE</div></div>
+      <div class="stat"><div class="n">${doneCount} / 3</div><div class="l">SAMPLE STORIES SHELVED</div></div>
+    </div>
+    <div class="grid3" style="margin-top:8px">
+      <div class="stat"><div class="n">${S.stars} ⭐</div><div class="l">STARS</div></div>
+      <div class="stat"><div class="n">${doneCount * 3}</div><div class="l">WORD JAR WORDS</div></div>
+      <div class="stat"><div class="n">${S.shelf.length}</div><div class="l">HER OWN TALES</div></div>
+    </div>
+    <p style="font-weight:700;margin:10px 0 2px">Baseline: ${S.baseline ? `done — ${esc(S.baseline.supportLabel)}` : "not done yet"}. Bookmark: ${S.bookmark ? esc((BOOKMARKS.find(b => b.id === S.bookmark) || {}).name || "") : "not picked yet"}.</p></div>
+    <div class="card"><div class="baloo" style="font-size:17px">🎁 Next Reward</div><p style="font-weight:700;margin:4px 0">${esc(S.nextReward)}</p></div>`;
+  // Library — First vs Latest
+  let lib = `<div class="card"><div class="baloo" style="font-size:19px">Library — First vs Latest</div>`;
+  if (S.baseline) {
+    lib += `<p style="font-weight:700;margin:8px 0 2px">🌱 FIRST (Day 1 baseline, locked)</p>
+      <p style="font-weight:700;margin:2px 0">Story: ${esc(SEED_STORY.title)} — ${esc(S.baseline.supportLabel)}</p>
+      ${S.baseline.retell ? `<p style="font-weight:700;margin:2px 0">Tell-It-Back: “${esc(S.baseline.retell)}”</p>` : ""}
+      <p style="font-weight:700;margin:2px 0">Tiny Tale: ${esc(S.baseline.tale.who)} + ${esc(S.baseline.tale.where)} + ${esc(S.baseline.tale.end)}</p>`;
+  } else lib += `<p style="font-weight:700;margin:8px 0">Baseline not done yet — her FIRST will appear here.</p>`;
+  const latestId = S.done[S.done.length - 1];
+  if (latestId) {
+    const st = STORIES.find(s => s.id === latestId); const rev = S.reviews[latestId] || {};
+    const jar = S.jars[latestId] || {};
+    const tale = S.shelf.filter(t => t.storyId === latestId).slice(-1)[0];
+    lib += `<p style="font-weight:700;margin:12px 0 2px">📖 LATEST</p>
+      <p style="font-weight:700;margin:2px 0">${esc(st.title)} — shelved ⭐</p>
+      <p style="font-weight:700;margin:2px 0">Word Jar: she used <b>${esc(jar.word || "—")}</b>${jar.sentence ? ` — “${esc(jar.sentence)}”` : jar.aloud ? " (said aloud)" : ""}</p>
+      <p style="font-weight:700;margin:2px 0">Review: Smooth ${esc(rev.smooth || "—")} • Understanding ${esc(rev.understand || "—")} • Imagination ${esc(rev.imagine || "—")}</p>
+      ${tale ? `<p style="font-weight:700;margin:2px 0">Her twist: “${esc(tale.text)}”</p>` : ""}`;
+  } else lib += `<p style="font-weight:700;margin:12px 0 2px">📖 LATEST</p><p style="font-weight:700;margin:2px 0">Her first finished story will stand here, side by side with Day 1.</p>`;
+  lib += `<p style="font-weight:700;margin:12px 0 2px">Sample library: Stories 1-3 playable. Stories 4-10 and Stages 2-5 arrive in the full Story World.</p></div>`;
+  $("#dash-lib").innerHTML = lib;
+  // Reading Map
+  const dims = [["smooth", "Reading Smoothly"], ["understand", "Understanding"], ["imagine", "Imagination"]];
+  let mp = `<div class="card"><div class="baloo" style="font-size:19px">Reading Map — review trend</div>`;
+  dims.forEach(d => {
+    const counts = { Growing: 0, Good: 0, Pro: 0 };
+    Object.values(S.reviews).forEach(r => { if (r[d[0]]) counts[r[d[0]]]++; });
+    mp += `<p style="font-weight:800;margin:9px 0 2px">${d[1]}</p><p style="font-weight:700;margin:2px 0">🌱 Growing × ${counts.Growing} • ⭐ Good × ${counts.Good} • 🌟 Pro × ${counts.Pro}</p>`;
+  });
+  const revRows = Object.keys(S.reviews).map(id => { const st = STORIES.find(s => s.id === id); const r = S.reviews[id]; return `<p style="font-weight:700;margin:3px 0">${esc(st.title)}: Smooth ${esc(r.smooth || "—")} • Understanding ${esc(r.understand || "—")} • Imagination ${esc(r.imagine || "—")}</p>`; }).join("");
+  mp += revRows || `<p style="font-weight:700;margin:8px 0">No parent reviews yet — reviews are optional and never block a story.</p>`;
+  mp += `</div>`;
+  $("#dash-map").innerHTML = mp;
+  // Story Shelf
+  let sh = `<div class="card"><div class="baloo" style="font-size:19px">Story Shelf — tales by Sreshta</div>`;
+  if (S.shelf.length) sh += S.shelf.slice().reverse().map(t => `<div class="card creamy" style="margin:8px 0"><div class="baloo" style="font-size:16px">${esc(t.title)}</div><p style="font-weight:700;white-space:pre-wrap;margin:3px 0">${esc(t.text)}</p><p style="font-weight:700;font-size:12px;margin:2px 0">${esc(t.date)}</p></div>`).join("");
+  else sh += `<p style="font-weight:700;margin:8px 0">No tales yet. Every story she finishes adds her own twist tale here.</p>`;
+  sh += `</div>`;
+  $("#dash-shelf").innerHTML = sh;
+  // Controls
+  $("#dash-ctrl").innerHTML = `<div class="card"><div class="baloo" style="font-size:19px">Controls</div>
+    <p style="font-weight:800;margin:8px 0 2px">Next Reward (shown on her home)</p>
+    <input type="text" id="rewardInput" value="${esc(S.nextReward)}">
+    <button class="btn" onclick="saveReward()">Save reward</button>
+    <p style="font-weight:800;margin:14px 0 2px">Start again</p>
+    <p style="font-weight:700;margin:2px 0">Clears stories, stars, reviews and word jars. Her Day-1 baseline, bookmark, Story Shelf tales and Next Reward stay safe — always.</p>
+    <button class="btn ghost" id="resetBtn" onclick="resetTap()">Reset progress</button>
+    <div id="resetMsg" style="font-weight:800;color:var(--goldlt);min-height:22px"></div></div>`;
+}
+function saveReward() { const v = $("#rewardInput").value.trim(); if (v) { S.nextReward = v; save(); } renderDash(); dashGo("ctrl"); }
+let resetArmed = false;
+function resetTap() {
+  if (!resetArmed) { resetArmed = true; const b = $("#resetBtn"); if (b) b.textContent = "Tap once more to be sure"; const m = $("#resetMsg"); if (m) m.textContent = "One more tap clears progress (baseline + shelf stay safe)."; return; }
+  const keep = { baseline: S.baseline, bookmark: S.bookmark, shelf: S.shelf, nextReward: S.nextReward };
+  S = freshState(); S.baseline = keep.baseline; S.bookmark = keep.bookmark; S.shelf = keep.shelf; S.nextReward = keep.nextReward;
+  resetArmed = false; save(); renderDash(); dashGo("ctrl");
+  const m = $("#resetMsg"); if (m) m.textContent = "All fresh! Her First Books, bookmark and tales are still safe. 🌙";
+}
+
+/* ================= INIT ================= */
+window.STORIES = STORIES; window.SEED_STORY = SEED_STORY; window.BOOKMARKS = BOOKMARKS; window.LOCKED_TITLES = LOCKED_TITLES;
+Object.defineProperty(window, "S", { configurable: true, get: () => S, set: (v) => { S = v; } });
+Object.defineProperty(window, "M", { configurable: true, get: () => M, set: (v) => { M = v; } });
+Object.defineProperty(window, "BP", { configurable: true, get: () => BP, set: (v) => { BP = v; } });
+Object.defineProperty(window, "baseMapPlaced", { configurable: true, get: () => baseMapPlaced, set: (v) => { baseMapPlaced = v; } });
+$("#accessLumi").innerHTML = LUMI_SVG;
+$("#pickLumi").innerHTML = LUMI_SVG;
+$("#homeLumi").innerHTML = LUMI_SVG;
+(function stars() { const sky = $("#sky"); let h = ""; for (let i = 0; i < 42; i++) { const x = (i * 37.7) % 100, y = (i * 23.3) % 100, s = 1.5 + (i % 3); h += `<span class="star" style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;animation-delay:${(i % 7) * 0.4}s"></span>`; } sky.innerHTML = h; })();
+renderHome();
+show("scr-access");
+</script>
+</body>
+</html>
